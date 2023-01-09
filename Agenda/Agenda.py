@@ -5,7 +5,23 @@ import fdb
 
 # Conexão com o Banco
 
-conexao = fdb.connect('c:/agenda/AGENDA.FDB', user='sysdba', password='alternativa')
+def firebirdConnectionData():    
+    lib = 'C:/Program Files/Firebird/Firebird_3_0/fbclient.dll'
+    user='sysdba'
+    password = 'masterkey'
+    host = 'localhost'
+    port = 3051
+    database = 'C:\\Estudo\\Agenda\\AGENDA.FDB'
+    conn = [user, password, host, port, database, lib]
+    return conn
+
+def connectFirebird():
+    connData = firebirdConnectionData()
+    print('connecting to firebird')
+    connection = fdb.connect(user=connData[0], password=connData[1], port=connData[3], host=connData[2], database=connData[4], fb_library_name=connData[5])
+    return connection
+
+conexao = connectFirebird()
 cur = conexao.cursor()
 
 # Criando a Agenda
